@@ -1,8 +1,21 @@
 ---
+resources:
+  - name: job-hello-world-timer
+    type: time
+    source:
+      interval: 10m
+  - name: resource-tutorial
+    type: git
+    source:
+      uri: https://github.com/archii/concourse-tutorial.git
+      branch: test
+
 jobs:
   - name: job-hello-world
     public: true
     plan:
+      - get: job-hello-world-timer
+        trigger: true
       - task: hello-world
         config:
           platform: linux
@@ -12,3 +25,7 @@ jobs:
           run:
             path: echo
             args: [hello world]
+      - get: resource-tutorial
+        trigger: true
+      - task: ubuntu-uname
+        file: resource-tutorial/tutorials/basic/task-hello-world/task_ubuntu_uname.yml
