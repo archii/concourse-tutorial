@@ -3,7 +3,7 @@ resources:
   - name: job-hello-world-timer
     type: time
     source:
-      interval: 10m
+      interval: 3h
   - name: resource-tutorial
     type: git
     source:
